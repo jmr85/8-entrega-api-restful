@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Soda",
+    "price": 105,
+    "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg",
+    "id": 1
+  },
+  {
+    "title": "Yerba",
+    "price": 55,
+    "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg",
+    "id": 2
+  },
+  {
+    "title": "Coca Cola",
+    "price": 130,
+    "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg",
+    "id": 3
+  },
+  {
+    "title": "Pepsi",
+    "price": 120,
+    "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg",
+    "id": 4
+  },
+  {
+    "title": "Manteca",
+    "price": 80,
+    "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg",
+    "id": 5
+  }
+]
