@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/productos HTTP/1.1
+Content-Type:application/json
+
+    {
+        "title": "Lavandina Ayudin 0.5L",
+        "price": 60,
+        "thumbnail": "url_test"
+    }
