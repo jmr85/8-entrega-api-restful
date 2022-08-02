@@ -1,0 +1,1 @@
+GET http://localhost:8080/api/productos HTTP/1.1
