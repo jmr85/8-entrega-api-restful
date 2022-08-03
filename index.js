@@ -28,7 +28,14 @@ app.get('/api/productos/:id', async (req, res) => {
     try {
         const producto = await contenedor.getById(numId);
         console.log(producto);
-        return res.status(200).json(producto);
+        if(producto !== null) {
+            return res.status(200).json(producto);
+        }else{
+            return res.status(404).json({
+                message: 'Producto no encontrado'
+            });
+        }
+        
     } catch (error) {
         res.status(500).json({
             message: 'Error al obtener los productos',
@@ -60,6 +67,32 @@ app.post('/api/productos', async(req, res) => {
     }else{
         return res.status(400).json({message: 'Campos invalidos o vacios'});
     }
+});
+
+app.delete('/api/productos/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    const numId = parseInt(id);
+
+    const foundId = await contenedor.getById(numId);
+
+    if(foundId !== null){
+        try {
+            await contenedor.deleteById(foundId);
+            return res.status(200).json({
+                message: 'eliminado'
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Error al eliminar el producto',
+                error
+            });
+        }
+    }else{
+        return res.status(404).json({
+            message: 'No se encontro el producto'
+        });
+    }  
 });
 
 app.get('/api/productoRandom', async (req, res) => {
