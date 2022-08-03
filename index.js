@@ -5,9 +5,13 @@ let contenedor = new Contenedor('data/productos.txt');
 
 const app = express();
 
+const router = express.Router();
+
+
 app.use(express.json())
 
-app.get('/api/productos', async (req, res) => {
+// Get all products
+router.get('/', async (req, res) => {
     let productos;
     try {
         productos = await contenedor.getAll();
@@ -21,21 +25,22 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
-app.get('/api/productos/:id', async (req, res) => {
+// Get product by id
+router.get('/:id', async (req, res) => {
     const id = req.params.id;
     console.log(id);
     const numId = parseInt(id);
     try {
         const producto = await contenedor.getById(numId);
         console.log(producto);
-        if(producto !== null) {
+        if (producto !== null) {
             return res.status(200).json(producto);
-        }else{
+        } else {
             return res.status(404).json({
                 message: 'Producto no encontrado'
             });
         }
-        
+
     } catch (error) {
         res.status(500).json({
             message: 'Error al obtener los productos',
@@ -44,55 +49,57 @@ app.get('/api/productos/:id', async (req, res) => {
     }
 });
 
-app.post('/api/productos', async(req, res) => {
-    const {title, price, thumbnail} = req.body;
-   
-    const validator = (title !== null && price !==null && thumbnail !== null) 
-    && (title !== '' && price !== '' && thumbnail !== '');
+// save product
+router.post('/', async (req, res) => {
+    const { title, price, thumbnail } = req.body;
+
+    const validator = (title !== null && price !== null && thumbnail !== null)
+        && (title !== '' && price !== '' && thumbnail !== '');
     if (validator) {
         try {
             await contenedor.save(title, price, thumbnail);//almaceno en el file el producto
-            
-            const allPruductos = await contenedor.getAll();          
+
+            const allPruductos = await contenedor.getAll();
             const productAdded = allPruductos.length;//Para sacar el ultimo index
             const producto = await contenedor.getById(productAdded);//Obtengo el ultimo producto agregado
-           
+
             return res.status(201).json(producto);//Muestra el ultimo producto agregado
-        }catch (err) {
+        } catch (err) {
             return res.status(500).json({
                 message: 'Error al guardar el producto',
                 err
             });
         }
-    }else{
-        return res.status(400).json({message: 'Campos invalidos o vacios'});
+    } else {
+        return res.status(400).json({ message: 'Campos invalidos o vacios' });
     }
 });
 
-app.delete('/api/productos/:id', async (req, res) => {
+// delete product by id
+router.delete('/:id', async (req, res) => {
     const id = req.params.id;
     console.log(id);
     const numId = parseInt(id);
-
-    const foundId = await contenedor.getById(numId);
-
-    if(foundId !== null){
-        try {
-            await contenedor.deleteById(foundId);
+    try {
+        const foundId = await contenedor.getById(numId);
+        if (foundId !== null && foundId !== undefined) {
+            await contenedor.deleteById(foundId.id);
             return res.status(200).json({
-                message: 'eliminado'
+                message: 'Producto eliminado'
             });
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Error al eliminar el producto',
-                error
+        } else {
+            return res.status(404).json({
+                message: 'Producto no encontrado'
             });
         }
-    }else{
-        return res.status(404).json({
-            message: 'No se encontro el producto'
+
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error al eliminar el producto',
+            error
         });
-    }  
+    }
+
 });
 
 app.get('/api/productoRandom', async (req, res) => {
@@ -113,6 +120,8 @@ app.get('/api/productoRandom', async (req, res) => {
         });
     }
 });
+
+app.use('/api/productos', router);
 
 const PORT = process.env.PORT || 8080
 

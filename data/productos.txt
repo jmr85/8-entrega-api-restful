@@ -334,23 +334,5 @@
     "price": 450,
     "thumbnail": "url_test",
     "id": 56
-  },
-  {
-    "title": "Chocolate Havanna",
-    "price": 450,
-    "thumbnail": "url_test",
-    "id": 57
-  },
-  {
-    "title": "Lavandina Ayudin 1L",
-    "price": 120,
-    "thumbnail": "url_test",
-    "id": 58
-  },
-  {
-    "title": "Lavandina Ayudin 0.5L",
-    "price": 60,
-    "thumbnail": "url_test",
-    "id": 59
   }
 ]

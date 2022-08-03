@@ -50,7 +50,7 @@ class Contenedor {
             let dataArch = await fs.promises.readFile(this.fileName, 'utf8')
             let dataArchParse = JSON.parse(dataArch)
             let producto = dataArchParse.find(prod => prod.id === id)
-            if (producto) {
+            if (producto !== undefined || producto !== null) {
                 const dataArchParseFiltrado = dataArchParse.filter(prod => prod.id !== id)
                 await fs.promises.writeFile(this.fileName, JSON.stringify(dataArchParseFiltrado, null, 2), 'utf-8')
                 console.log('Producto eliminado')
