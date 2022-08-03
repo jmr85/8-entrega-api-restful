@@ -45,6 +45,46 @@ class Contenedor {
         return contenido;
     }
 
+    async updateById(id, title, price, thumbnail){
+        try {
+            let dataArch = await fs.promises.readFile(this.fileName, 'utf8')
+            let dataArchParse = JSON.parse(dataArch)
+            let producto = dataArchParse.find(prod => prod.id === id)// solo para validar
+            if (producto !== undefined || producto !== null) {
+                
+                // producto.title = title;
+                // producto.price = price;
+                // producto.thumbnail = thumbnail;
+
+
+                //to-do guardar edicion del producto
+                // con un find index talvez sea mejor
+                // mejor con un map ya que devuelve un nuevo array
+                // o sea un map sobre dataArchParse y filtrar por id
+
+                const dataArchParseFiltrado = dataArchParse.map(element => {
+                    if (element.id === id) {
+                        element.title = title;
+                        element.price = price;
+                        element.thumbnail = thumbnail;
+                        return element;                    
+                    }else{
+                        return element;
+                    }
+                })
+
+                //const dataArchParseFiltrado = dataArchParse.filter(prod => prod.id !== id)
+                await fs.promises.writeFile(this.fileName, JSON.stringify(dataArchParseFiltrado, null, 2), 'utf-8')
+                
+                console.log('Contenedor log: ', 'Producto actualizado')
+            } else {
+                console.log('Contenedor log: ', 'no existe el producto')
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async deleteById(id) {
         try {
             let dataArch = await fs.promises.readFile(this.fileName, 'utf8')

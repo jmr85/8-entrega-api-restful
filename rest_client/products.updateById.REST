@@ -1,0 +1,8 @@
+PUT http://localhost:8080/api/productos/1 HTTP/1.1
+Content-Type:application/json
+
+    {
+        "title": "Soda111",
+        "price": 105,
+        "thumbnail": "https://static0.tiendeo.com.ar/upload_articulos/253166/9f35eb3e-b2f1-5e09-adab-601aa1da86e7.jpg"
+    }

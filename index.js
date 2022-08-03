@@ -102,6 +102,42 @@ router.delete('/:id', async (req, res) => {
 
 });
 
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const { title, price, thumbnail } = req.body;
+
+    const numId = parseInt(id);
+
+    const validator = (title !== null && price !== null && thumbnail !== null)
+            && (title !== '' && price !== '' && thumbnail !== '');
+
+    try {
+        const foundId = await contenedor.getById(numId);
+        if (foundId !== null && foundId !== undefined) {
+            const idFound = parseInt(foundId.id);      
+            if (validator) {
+                await contenedor.updateById(idFound, title, price, thumbnail);
+                return res.status(200).json({
+                    message: 'Producto actualizado'
+                });
+            }else{
+                return res.status(400).json({ message: 'Campos invalidos o vacios' });
+            }
+        } else {
+            return res.status(404).json({
+                message: 'Producto no encontrado'
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error al actualizar el producto',
+            error
+        });
+    }
+
+});
+
 app.get('/api/productoRandom', async (req, res) => {
     let productos;
     try {
