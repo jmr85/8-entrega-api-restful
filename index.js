@@ -102,6 +102,7 @@ router.delete('/:id', async (req, res) => {
 
 });
 
+// update product by id
 router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const { title, price, thumbnail } = req.body;
@@ -136,25 +137,6 @@ router.put('/:id', async (req, res) => {
         });
     }
 
-});
-
-app.get('/api/productoRandom', async (req, res) => {
-    let productos;
-    try {
-        productos = await contenedor.getAll();
-        let totalProductos = productos.length;
-        console.log("total productos -> ", totalProductos);
-        let numeroRandom = Math.floor(Math.random() * totalProductos);
-        console.log("numero random -> ", numeroRandom);
-        console.log(productos);
-
-        return res.status(200).json(productos[numeroRandom]);
-    } catch (error) {
-        res.status(500).json({
-            message: 'Error al obtener los productos',
-            error
-        });
-    }
 });
 
 app.use('/api/productos', router);
