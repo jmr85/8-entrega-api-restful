@@ -9,6 +9,9 @@ const router = express.Router();
 
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use(express.static('public'))
 
 // Get all products
 router.get('/', async (req, res) => {

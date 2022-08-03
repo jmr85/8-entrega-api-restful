@@ -51,17 +51,7 @@ class Contenedor {
             let dataArchParse = JSON.parse(dataArch)
             let producto = dataArchParse.find(prod => prod.id === id)// solo para validar
             if (producto !== undefined || producto !== null) {
-                
-                // producto.title = title;
-                // producto.price = price;
-                // producto.thumbnail = thumbnail;
-
-
-                //to-do guardar edicion del producto
-                // con un find index talvez sea mejor
-                // mejor con un map ya que devuelve un nuevo array
-                // o sea un map sobre dataArchParse y filtrar por id
-
+               
                 const dataArchParseFiltrado = dataArchParse.map(element => {
                     if (element.id === id) {
                         element.title = title;
@@ -72,8 +62,6 @@ class Contenedor {
                         return element;
                     }
                 })
-
-                //const dataArchParseFiltrado = dataArchParse.filter(prod => prod.id !== id)
                 await fs.promises.writeFile(this.fileName, JSON.stringify(dataArchParseFiltrado, null, 2), 'utf-8')
                 
                 console.log('Contenedor log: ', 'Producto actualizado')
